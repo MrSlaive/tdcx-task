@@ -40,8 +40,8 @@ const RenderRoute = ()=>{
 function App() {
   return (
     <div className="app-cont">
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
-      {/* <BrowserRouter> */}
+      {/* <BrowserRouter basename={process.env.PUBLIC_URL}> */}
+      <BrowserRouter>
         <AlertCntxtProvider>
             <RenderRoute/>
         </AlertCntxtProvider>
