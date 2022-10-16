@@ -37,7 +37,7 @@ const RenderRoute = ()=>{
 function App() {
   return (
     <div className="app-cont">
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <AlertCntxtProvider>
           <RenderRoute/>
         </AlertCntxtProvider>
