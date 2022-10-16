@@ -1,0 +1,21 @@
+.modal-cont{
+    z-index: 999999;
+    position: fixed;
+    padding: 33vh 3em 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(72, 72, 72, 0.403);
+    .box-cont{
+      position: relative;
+      max-width: 20em;
+      margin: auto;
+    }
+  }
+  
+  @media only screen and (max-width: 425px){
+    .modal-cont{
+      padding: 33vh 1em 0;
+    }
+  }
