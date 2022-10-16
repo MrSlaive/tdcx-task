@@ -1,15 +1,18 @@
 import React from 'react';
 import { ReactComponent as EditIcon } from '../img/pen-solid.svg';
 import { TaskCntxt, DashBoardCntxt} from '../Context';
+import { LoadCntxt } from '../../../Context';
 import { PutMethod, GetMethod } from '../../../utils/httpRequest';
 import ModalDialog from '../../ModalDialog'
 
 const EditTaskDialog =({taskId})=>{
+    const [, setLoad] = React.useContext(LoadCntxt);
     const [openEdit, setOpenEditTask] = React.useState(false);
     const [taskName, setTaskName] = React.useState('');
     const [taskList, setTaskList] = React.useContext(TaskCntxt);
     const [, setdashBoardObj] = React.useContext(DashBoardCntxt);
     const handleEditTask =()=>{
+        setLoad(true);
         PutMethod(
             `tasks/${taskId}`,
             {name : taskName},
@@ -17,6 +20,7 @@ const EditTaskDialog =({taskId})=>{
                 GetMethod('tasks', (data)=>setTaskList(data.tasks));
                 GetMethod('dashboard', (data)=>{setdashBoardObj(data)});
                 setOpenEditTask(false);
+                setLoad(false);
             },
         );
     }

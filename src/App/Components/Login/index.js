@@ -6,7 +6,8 @@ import './loginStyle.scss';
 
 export default function LoginPage() {
   const [, setAlert] = React.useContext(AlertCntxt);
-  const [loginObj, setLoginObj] = React.useState({apiKey:'35223f17179b0a2e',name:'John Doe'});
+  // const [loginObj, setLoginObj] = React.useState({apiKey:'35223f17179b0a2e',name:'John Doe'});
+  const [loginObj, setLoginObj] = React.useState({apiKey:'',name:''});
   const {apiKey, name} = loginObj;
    let navigate = useNavigate();
     const handleLogin = ()=>{

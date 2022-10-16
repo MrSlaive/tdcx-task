@@ -12,3 +12,13 @@ export const AlertCntxtProvider = props =>{
         </AlertCntxt.Provider>
     );
 };
+
+export const LoadCntxt = React.createContext();
+export const LoadCntxtProvider = props =>{
+    const [load, setLoad] = React.useState(false);
+    return(
+        <LoadCntxt.Provider value={[load, setLoad]}>
+            {props.children}
+        </LoadCntxt.Provider>
+    );
+};

@@ -1,5 +1,6 @@
 import React from 'react'
 import { TaskCntxt, DashBoardCntxt} from '../Context';
+import { LoadCntxt } from '../../../Context';
 import { PostMethod, GetMethod } from '../../../utils/httpRequest';
 import ModalDialog from '../../ModalDialog'
 
@@ -7,8 +8,10 @@ const AddTaskDialog =()=>{
     const [addTask, setAddTask] = React.useState(false);
     const [, setTaskList] = React.useContext(TaskCntxt);
     const [, setdashBoardObj] = React.useContext(DashBoardCntxt);
+    const [, setLoad] = React.useContext(LoadCntxt);
     const taskName = React.useRef();
     const handleCreateTask =()=>{
+        setLoad(true);
         PostMethod(
             'task',
             {name: taskName.current.value},
@@ -16,6 +19,7 @@ const AddTaskDialog =()=>{
                 GetMethod('tasks', (data)=>setTaskList(data.tasks));
                 GetMethod('dashboard', (data)=>{setdashBoardObj(data)});
                 setAddTask(false);
+                setLoad(false);
             },
         );
     }

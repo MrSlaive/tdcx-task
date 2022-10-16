@@ -4,16 +4,23 @@ import searchIcon from '../img/search-solid.svg';
 import AddTaskDialog from './AddTaskDialog';
 import EditTaskDialog from './EditTaskDialog';
 import { TaskCntxt,DashBoardCntxt } from '../Context';
+import { LoadCntxt } from '../../../Context';
 import { PutMethod, GetMethod, DeleteMethod } from '../../../utils/httpRequest';
+import Skeleton from 'react-loading-skeleton';
 
 const RenderTaskList =({taskData})=>{
     const [, setTaskList] = React.useContext(TaskCntxt);
     const [, setdashBoardObj] = React.useContext(DashBoardCntxt);
+    const [load, setLoad] = React.useContext(LoadCntxt);
     const handleRefetch=()=>{
-        GetMethod('tasks', (data)=>setTaskList(data.tasks));
+        GetMethod('tasks', (data)=>{
+            setTaskList(data.tasks);
+            setLoad(false);
+        });
         GetMethod('dashboard', (data)=>{setdashBoardObj(data);});
     }
     const handleCheckTask = (task)=>{
+        setLoad(true);
         PutMethod(
             `tasks/${task._id}`,
             {completed : !task.completed},
@@ -21,6 +28,7 @@ const RenderTaskList =({taskData})=>{
         );
     }
     const handleDeleteTask =(id)=>{
+        setLoad(true);
         DeleteMethod(
             `tasks/${id}`,
             ()=>{ handleRefetch()},
@@ -39,6 +47,9 @@ const RenderTaskList =({taskData})=>{
                             onChange={()=>handleCheckTask(itm)}
                         /></div>
                     <div>
+                    {!!load ?
+                        <Skeleton />
+                    :
                         <label
                             htmlFor={itm._id}
                             style={{
@@ -48,6 +59,7 @@ const RenderTaskList =({taskData})=>{
                             }}
                             > {itm.name}
                         </label>
+                    }
                     </div>
                     <div>
                         <EditTaskDialog taskId={itm._id}/>

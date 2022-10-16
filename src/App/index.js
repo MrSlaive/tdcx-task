@@ -1,10 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import {AlertCntxtProvider, AlertCntxt} from './Context';
+import {AlertCntxtProvider, AlertCntxt, LoadCntxtProvider} from './Context';
 import Login from './Components/Login';
 import Task from './Components/Task';
 import ModalDialog from './Components/ModalDialog';
 import './App.scss';
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const RenderRoute = ()=>{
   const [alert, setAlert] = React.useContext(AlertCntxt);
@@ -26,10 +27,12 @@ const RenderRoute = ()=>{
             </>
         }
       />
-      <Routes>
-        <Route index element={<Login />} />
-        <Route path="/task" element={<PrivateRoute><Task /></PrivateRoute>}/>
-      </Routes>
+      <LoadCntxtProvider>
+        <Routes>
+          <Route index element={<Login />} />
+          <Route path="/task" element={<PrivateRoute><Task /></PrivateRoute>}/>
+        </Routes>
+      </LoadCntxtProvider>
     </>
   );
 }
@@ -38,8 +41,9 @@ function App() {
   return (
     <div className="app-cont">
       <BrowserRouter basename={process.env.PUBLIC_URL}>
+      {/* <BrowserRouter> */}
         <AlertCntxtProvider>
-          <RenderRoute/>
+            <RenderRoute/>
         </AlertCntxtProvider>
       </BrowserRouter>
     </div>
